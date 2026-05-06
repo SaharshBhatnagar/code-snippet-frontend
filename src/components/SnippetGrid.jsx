@@ -1,5 +1,5 @@
 import React from 'react';
-import SnippetCard from './SnippetCard';
+import SnippetCard from './snippetCard';
 
 export default function SnippetGrid({ snippets }) {
   if (snippets.length === 0) {
