@@ -1,0 +1,146 @@
+.navbar {
+    background-color: var(--card-col-opacity);
+    border-bottom: 2px solid var(--border-col);
+    backdrop-filter: blur(30px);
+}
+
+#title {
+    font-size: 1.5rem;
+    font-weight: bolder;
+    margin-bottom: 8px;
+    color: var(--primary-col);
+}
+
+.nav-element a, .nav-element p {
+    letter-spacing: 1px;
+    font-weight:600;
+    padding: 6px;
+    text-decoration: none;
+    color: var(--black-col);
+}
+
+.nav-element a:hover {
+    color: var(--primary-col);
+}
+
+#user-name {
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--mail-col);
+    padding: 6px;
+    padding-right: 20px;
+}
+
+#log-out {
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--desc-col);
+    padding: 6px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#log-out:hover {
+    color: var(--red-col);
+}
+
+#heading {
+    letter-spacing: 1px;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+#heading-description {
+    letter-spacing: 1px;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 6rem;
+    color: var(--desc-col);
+}
+
+.search-wrapper {
+    z-index: 1;
+    max-width: 800px;
+    position: relative;
+    margin: 0 auto;
+    border-radius: 20px;
+    border: 2px solid var(--border-col);
+}
+
+#search-input {
+    z-index: 1;
+    letter-spacing: 1px;
+    width: 100%;
+    padding: 32px;
+    border-radius: 24px;
+    border: none;
+    font-size: 1.2rem;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    outline: none;
+}
+
+.search-wrapper:focus-within {
+    border-width: 3px;
+    border-color: var(--primary-col);
+}
+
+.snippet-container button {
+    letter-spacing: 1px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    border: 2px solid var(--border-col);
+    background-color: var(--card-col);
+    font-size: 1rem;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    margin-bottom: 40px;
+    cursor: pointer;
+}
+
+.snippet-container button:hover, .snippet-container button.active {
+    background-color: var(--primary-col);
+    color: var(--card-col);
+    border-color: var(--primary-col);
+}
+
+.snippet-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.snippet-card:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 255, 0.2);
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.card-title {
+    font-size: larger;
+    font-weight: bold;
+    color: var(--heading-col);
+}
+
+.card-desc {
+    font-style: italic;
+    font-size: small;
+    color: var(--desc-col);
+    margin-bottom: auto;
+}
+
+.card-footer {
+    letter-spacing: 1px;
+    font-style: oblique;
+    text-transform:capitalize;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 4px;
+    border-top: 1px solid var(--border-col); 
+}

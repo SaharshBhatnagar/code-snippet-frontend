@@ -1,0 +1,29 @@
+:root {
+    --black-col: #000000;
+    --primary-col: #4f46e5;
+    --primaryhover-col: #4338ca;
+    --background-col: #f5f8ff;
+    --card-col: #ffffff;
+    --card-col-opacity: #ffffffb2;
+    --mail-col:  #2a2c46;
+    --heading-col: #010427;
+    --desc-col: #62647c;
+    --border-col: #cac3c3;
+    --red-col: rgb(221, 30, 30);
+    --green-col: lightgreen;
+    --green-m-col:#10b981;
+    --fontfamily: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--fontfamily);
+    background-color: var(--background-col); 
+    min-height: 100vh;
+    color: var(--heading-col);
+}
