@@ -1,31 +1,16 @@
-import React, { useState, useMemo } from 'react';
-import Header from './components/Header';
-import SnippetGrid from './components/SnippetGrid';
-import { mockSnippets } from './data/mockData';
-import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import Landing from './pages/Landing';
+import Auth from './pages/Auth';
+import Dashboard from './pages/Dashboard';
 
-export default function App() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState('all');
-
-  const filteredSnippets = useMemo(() => {
-    return mockSnippets.filter(snippet => {
-      const matchesSearch = snippet.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                            snippet.description.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = activeFilter === 'all' || snippet.category === activeFilter;
-      return matchesSearch && matchesCategory;
-    });
-  }, [searchQuery, activeFilter]);
-
+function App() {
   return (
-    <div className="app-container">
-      <Header 
-        searchQuery={searchQuery} 
-        setSearchQuery={setSearchQuery}
-        activeFilter={activeFilter}
-        setActiveFilter={setActiveFilter}
-      />
-      <SnippetGrid snippets={filteredSnippets} />
-    </div>
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/login" element={<Auth />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Routes>
   );
 }
+
+export default App;
