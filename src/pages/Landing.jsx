@@ -7,11 +7,14 @@ export default function Landing() {
     const [snippets, setSnippets] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [activeFilter, setActiveFilter] = useState('all');
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         async function loadData() {
             const data = await fetchSnippets();
             setSnippets(data || []);
+
+            setIsLoading(false);
         }
         loadData();
     }, []);
@@ -56,7 +59,9 @@ export default function Landing() {
             </section>
 
             <main className="snippet-result">
-                {filteredSnippets.length === 0 ? (
+                {isLoading ? (
+                    <div id="empty-state">Loading snippets...</div>
+                ) : filteredSnippets.length === 0 ? (
                     <div id="empty-state">NO SNIPPETS FOUND</div>
                 ) : (
                     <div id="results-grid">
