@@ -13,19 +13,6 @@ export async function loginUser(email, password) {
     }
 }
 
-export async function registerUser(username, email, password) {
-    try {
-        const data = await apiFetch('/auth/register', { 
-            method: 'POST', 
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, email, password })
-        });
-        return { success: true, message: data.message };
-    } catch (err) {
-        return { success: false, error: "Failed to connect to server" };
-    }
-}
-
 export async function logoutUser() {
     try {
         return await apiFetch('/auth/logout', { method: 'POST' });
@@ -40,5 +27,31 @@ export async function sessionVerifing() {
         return { success: true, user: data }; 
     } catch (err) {
         return { success: false, err: "error verifying session" };
+    }
+}
+
+export async function registerUser(username, email, password) {
+    try {
+        const data = await apiFetch('/auth/register', { 
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, email, password })
+        });
+        return { success: true, message: data.message };
+    } catch (err) {
+        return { success: false, error: err.error || "Failed to connect to server" };
+    }
+}
+
+export async function forgotPasswordApi(email) {
+    try {
+        const data = await apiFetch('/auth/forgot-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+        return { success: true, message: data.message };
+    } catch (err) {
+        return { success: false, error: err.error || "Failed to process request" };
     }
 }

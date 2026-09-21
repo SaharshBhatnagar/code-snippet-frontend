@@ -9,13 +9,14 @@ main {
     position: relative;
     width: 400px;
     height: 520px;
-    background: #ffffff;
+    background: var(--card-col);
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    border: 1px solid var(--border-col);
 }
 
 .wrapper .form-box {
@@ -44,7 +45,7 @@ main {
 
 .form-box h2 {
     font-size: 2em;
-    color: #111827;
+    color: var(--heading-col);
     text-align: center;
     font-weight: 600;
     margin-bottom: 25px;
@@ -57,22 +58,31 @@ main {
     margin: 25px 0; 
 }
 
+.input-box input:-webkit-autofill,
+.input-box input:-webkit-autofill:hover, 
+.input-box input:-webkit-autofill:focus, 
+.input-box input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--card-col) inset !important;
+    -webkit-text-fill-color: var(--heading-col) !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 .input-box input {
     width: 100%;
     height: 100%;
     background: transparent;
-    border: 1px solid #d1d5db; 
+    border: 1px solid var(--border-col); 
     border-radius: 8px; 
     outline: none;
     font-size: 1em;
-    color: #111827;
+    color: var(--heading-col);
     padding: 0 15px; 
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .input-box input:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); 
+    border-color: var(--primary-col);
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.15); 
 }
 
 .input-box label {
@@ -81,11 +91,11 @@ main {
     left: 12px;
     transform: translateY(-50%);
     font-size: 1em;
-    color: #6b7280;
+    color: var(--desc-col);
     font-weight: 500;
     pointer-events: none;
     transition: 0.2s ease;
-    background-color: #ffffff; 
+    background-color: var(--card-col); 
     padding: 0 4px;
 }
 
@@ -93,13 +103,13 @@ main {
 .input-box input:not(:placeholder-shown) ~ label {
     top: 0; 
     font-size: 0.85em;
-    color: #4f46e5;
+    color: var(--primary-col);
 }
 
 .login-button, .register-button {
     width: 100%;
     height: 45px;
-    background: #4f46e5;
+    background: var(--primary-col);
     border: none;
     outline: none;
     border-radius: 6px;
@@ -111,18 +121,36 @@ main {
 }
 
 .login-button:hover, .register-button:hover {
-    background: #4338ca; 
+    background: var(--primaryhover-col); 
 }
 
 .login-register {
     font-size: 0.9em;
     text-align: center;
     margin-top: 20px;
+    color: var(--desc-col);
 }
 
 .login-register a {
-    color: #4f46e5;
+    color: var(--primary-col);
     text-decoration: none;
     font-weight: 600;
     margin-left: 5px;
+}
+
+.forgot-password {
+    text-align: right;
+    margin-top: -15px;
+    margin-bottom: 20px;
+}
+
+.forgot-password a {
+    font-size: 0.85em;
+    color: var(--primary-col);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
 }
