@@ -50,8 +50,9 @@ export default function SnippetCard({ snippet, currentUser, isFavorite, onToggle
                 <h3 className="card-title" dangerouslySetInnerHTML={{ __html: sanitizeHTML(snippet.title) }} />
                 
                 <div style={{ display: 'flex', gap: '8px' }}>
+                    {/* Fixed: Color is now explicitly var(--red-col) */}
                     {isOwner && (
-                        <button onClick={() => onDeletePrompt(snippet.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--desc-col)' }}>
+                        <button onClick={() => onDeletePrompt(snippet.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red-col)' }}>
                             <IoTrashOutline size={20} />
                         </button>
                     )}
