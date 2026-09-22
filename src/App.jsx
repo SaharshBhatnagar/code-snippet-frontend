@@ -1,16 +1,16 @@
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Landing from './pages/Landing';
-import Auth from './pages/Auth';
 import Dashboard from './pages/Dashboard';
+import Auth from './pages/Auth';
+import ResetPassword from './pages/ResetPassword';
 
-function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route path="/login" element={<Auth />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-    </Routes>
-  );
+export default function App() {
+    return (
+            <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/login" element={<Auth />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+            </Routes>
+    );
 }
-
-export default App;

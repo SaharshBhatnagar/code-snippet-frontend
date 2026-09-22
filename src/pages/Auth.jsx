@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { loginUser, registerUser, forgotPasswordApi } from '../services/authService'; // Imported new API
+import { loginUser, registerUser, forgotPasswordApi } from '../services/authService';
 import Navbar from '../components/Navbar';
 import Popup from '../components/Popup';
 
@@ -11,6 +11,9 @@ export default function Auth() {
     const [isLogin, setIsLogin] = useState(location.state?.mode !== 'signUp');
     const [formData, setFormData] = useState({ username: '', email: '', password: '' });
     const [notification, setNotification] = useState({ message: '', type: '' });
+    
+    const [showForgotModal, setShowForgotModal] = useState(false);
+    const [resetEmail, setResetEmail] = useState('');
 
     useEffect(() => {
         if (location.state?.mode === 'signUp') {
@@ -58,27 +61,76 @@ export default function Auth() {
         }
     };
 
-    const handleForgotPassword = async (e) => {
+    const handleForgotPasswordSubmit = async (e) => {
         e.preventDefault();
         
-        if (!formData.email) {
-            showNotification("Please enter your email in the field above first.", "error");
+        if (!resetEmail) {
+            showNotification("Please enter an email address.", "error");
             return;
         }
 
-        const res = await forgotPasswordApi(formData.email);
+        const res = await forgotPasswordApi(resetEmail);
         
         if (res.success) {
             showNotification(res.message, "success");
+            setShowForgotModal(false);
+            setResetEmail('');
         } else {
             showNotification(res.error, "error");
         }
     };
 
+
     return (
         <>
             <Navbar user={null} />
             <Popup message={notification.message} type={notification.type} />
+            
+            {showForgotModal && (
+                <div style={{
+                    position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1000,
+                    display: 'flex', justifyContent: 'center', alignItems: 'center',
+                    backdropFilter: 'blur(4px)'
+                }} onClick={() => setShowForgotModal(false)}>
+                    <div style={{
+                        backgroundColor: 'var(--card-col)', padding: '30px', borderRadius: '12px',
+                        width: '400px', maxWidth: '90%', boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
+                        textAlign: 'center', border: '1px solid var(--border-col)'
+                    }} onClick={e => e.stopPropagation()}>
+                        
+                        <h3 style={{ marginBottom: '15px', color: 'var(--heading-col)', fontSize: '1.4rem' }}>Reset Password</h3>
+                        <p style={{ color: 'var(--desc-col)', marginBottom: '25px', fontSize: '0.95rem' }}>
+                            Enter your account email address to receive a secure reset link.
+                        </p>
+                        
+                        <form onSubmit={handleForgotPasswordSubmit}>
+                            <input 
+                                type="email" 
+                                placeholder="Email address" 
+                                value={resetEmail}
+                                onChange={(e) => setResetEmail(e.target.value)}
+                                required
+                                style={{
+                                    width: '100%', padding: '12px 15px', marginBottom: '25px',
+                                    borderRadius: '8px', border: '1px solid var(--border-col)',
+                                    backgroundColor: 'transparent', color: 'var(--heading-col)',
+                                    outline: 'none', fontSize: '1rem'
+                                }}
+                            />
+                            <div style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
+                                <button type="button" onClick={() => setShowForgotModal(false)} style={{ padding: '10px 20px', borderRadius: '8px', border: '1px solid var(--border-col)', backgroundColor: 'transparent', cursor: 'pointer', fontWeight: 'bold', color: 'var(--desc-col)', flexGrow: 1 }}>
+                                    Cancel
+                                </button>
+                                <button type="submit" style={{ padding: '10px 20px', borderRadius: '8px', border: 'none', backgroundColor: 'var(--primary-col)', color: 'white', cursor: 'pointer', fontWeight: 'bold', flexGrow: 1 }}>
+                                    Send Link
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
             <main>
                 <div className={`wrapper ${!isLogin ? 'active' : ''}`}>
                     <section className={`form-box ${isLogin ? 'login' : 'register'}`}>
@@ -101,7 +153,7 @@ export default function Auth() {
                             
                             {isLogin && (
                                 <div className="forgot-password">
-                                    <a href="#" onClick={handleForgotPassword}>Forgot Password?</a>
+                                    <a href="#" onClick={(e) => { e.preventDefault(); setShowForgotModal(true); }}>Forgot Password?</a>
                                 </div>
                             )}
 

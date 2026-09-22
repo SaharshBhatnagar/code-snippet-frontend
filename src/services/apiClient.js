@@ -1,9 +1,11 @@
 export async function apiFetch(route, options = {}) {
     try {
         const endpoint = `${import.meta.env.VITE_API_URL}${route}`;
+        
         const fetchOption = {
             ...options,
-            credentials: 'include'
+            credentials: 'include',
+            cache: 'no-store'
         };
 
         const response = await fetch(endpoint, fetchOption);
@@ -14,9 +16,11 @@ export async function apiFetch(route, options = {}) {
         }
 
         const data = await response.json();
+        
         if (!response.ok) {
             throw data;
         }
+        
         return data;
     } catch (err) {
         throw err;
