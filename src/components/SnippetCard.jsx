@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { IoCopyOutline, IoCheckmarkOutline, IoHeartOutline, IoHeart, IoTrashOutline } from 'react-icons/io5';
+import { IoCopyOutline, IoCheckmarkOutline, IoHeartOutline, IoHeart, IoTrashOutline, IoPencilOutline } from 'react-icons/io5';
 import { sanitizeHTML } from '../utils/sanitizer';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-export default function SnippetCard({ snippet, currentUser, isFavorite, onToggleFavorite, onDeletePrompt }) {
+export default function SnippetCard({ snippet, currentUser, isFavorite, onToggleFavorite, onDeletePrompt, onEditPrompt }) {
     const [copied, setCopied] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -50,11 +50,16 @@ export default function SnippetCard({ snippet, currentUser, isFavorite, onToggle
                 <h3 className="card-title" dangerouslySetInnerHTML={{ __html: sanitizeHTML(snippet.title) }} />
                 
                 <div style={{ display: 'flex', gap: '8px' }}>
-                    {/* Fixed: Color is now explicitly var(--red-col) */}
+
                     {isOwner && (
-                        <button onClick={() => onDeletePrompt(snippet.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red-col)' }}>
-                            <IoTrashOutline size={20} />
-                        </button>
+                        <>
+                            <button onClick={() => onEditPrompt(snippet)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--google-blue)' }}>
+                                <IoPencilOutline size={20} />
+                            </button>
+                            <button onClick={() => onDeletePrompt(snippet.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red-col)' }}>
+                                <IoTrashOutline size={20} />
+                            </button>
+                        </>
                     )}
                     
                     <button onClick={() => onToggleFavorite(snippet.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: isFavorite ? brandColor : 'var(--desc-col)' }}>

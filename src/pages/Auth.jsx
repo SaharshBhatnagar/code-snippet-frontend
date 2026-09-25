@@ -15,7 +15,7 @@ export default function Auth() {
     const [showForgotModal, setShowForgotModal] = useState(false);
     const [resetEmail, setResetEmail] = useState('');
 
-    useEffect(() => {
+    useEffect(() => {     
         if (location.state?.mode === 'signUp') {
             setIsLogin(false);
         } else if (location.state?.mode === 'signIn') {

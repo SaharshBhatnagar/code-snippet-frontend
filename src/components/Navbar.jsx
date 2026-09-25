@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { logoutUser } from '../services/authService';
-import { IoMoonOutline, IoSunnyOutline } from 'react-icons/io5';
+import { IoMoonOutline, IoSunnyOutline, IoLogoGithub } from 'react-icons/io5';
 
 export default function Navbar({ user }) {
     const navigate = useNavigate();
@@ -38,6 +38,16 @@ export default function Navbar({ user }) {
                 <h2 id="title">Code Snippets</h2>
             </div>
             <div className="nav-element" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+
+                <a 
+                    href="https://github.com/SaharshBhatnagar/code-snippet-backend.git" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    style={{ color: 'var(--black-col)', display: 'flex', alignItems: 'center' }}
+                    title="View Source on GitHub"
+                >
+                    <IoLogoGithub size={22} />
+                </a>
                 
                 <button onClick={toggleTheme} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--black-col)', display: 'flex', alignItems: 'center' }}>
                     {isDarkMode ? <IoSunnyOutline size={22} /> : <IoMoonOutline size={22} />}

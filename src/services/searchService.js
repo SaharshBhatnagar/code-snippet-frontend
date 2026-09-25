@@ -49,3 +49,16 @@ export async function fetchUserFavoritesApi() {
         return { res: [] };
     }
 }
+
+export async function updateSnippetApi(id, snippetData) {
+    try {
+        const data = await apiFetch(`/snippets/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(snippetData)
+        });
+        return { success: true, snippet: data.snippet };
+    } catch (err) {
+        return { success: false, error: err.error || "Failed to update snippet" };
+    }
+}

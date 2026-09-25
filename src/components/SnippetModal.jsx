@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { createSnippetApi } from '../services/searchService';
+import { useState, useEffect } from 'react';
+import { createSnippetApi, updateSnippetApi } from '../services/searchService';
 
-export default function SnippetModal({ isOpen, onClose, onSnippetCreated, showNotification }) {
+export default function SnippetModal({ isOpen, onClose, onSnippetCreated, onSnippetUpdated, showNotification, editData }) {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -9,6 +9,20 @@ export default function SnippetModal({ isOpen, onClose, onSnippetCreated, showNo
         category: 'react',
         language: 'javascript'
     });
+
+    useEffect(() => {
+        if (editData) {
+            setFormData({
+                title: editData.title || '',
+                description: editData.description || '',
+                code: editData.code || '',
+                category: editData.category || 'react',
+                language: editData.language || 'javascript'
+            });
+        } else {
+            setFormData({ title: '', description: '', code: '', category: 'react', language: 'javascript' });
+        }
+    }, [editData, isOpen]);
 
     if (!isOpen) return null;
 
@@ -18,15 +32,26 @@ export default function SnippetModal({ isOpen, onClose, onSnippetCreated, showNo
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await createSnippetApi(formData);
         
-        if (res.success) {
-            showNotification("Snippet created successfully!", "success");
-            onSnippetCreated(res.snippet);
-            setFormData({ title: '', description: '', code: '', category: 'react', language: 'javascript' });
-            onClose();
+        if (editData) {
+            const res = await updateSnippetApi(editData.id, formData);
+            if (res.success) {
+                showNotification("Snippet updated successfully!", "success");
+                onSnippetUpdated(res.snippet);
+                onClose();
+            } else {
+                showNotification(res.error, "error");
+            }
         } else {
-            showNotification(res.error, "error");
+            const res = await createSnippetApi(formData);
+            if (res.success) {
+                showNotification("Snippet created successfully!", "success");
+                onSnippetCreated(res.snippet);
+                setFormData({ title: '', description: '', code: '', category: 'react', language: 'javascript' });
+                onClose();
+            } else {
+                showNotification(res.error, "error");
+            }
         }
     };
 
@@ -50,7 +75,9 @@ export default function SnippetModal({ isOpen, onClose, onSnippetCreated, showNo
     return (
         <div style={overlayStyle} onClick={onClose}>
             <div style={modalStyle} onClick={e => e.stopPropagation()}>
-                <h2 style={{ marginBottom: '20px', color: 'var(--heading-col)' }}>Create New Snippet</h2>
+                <h2 style={{ marginBottom: '20px', color: 'var(--heading-col)' }}>
+                    {editData ? "Edit Snippet" : "Create New Snippet"}
+                </h2>
                 <form onSubmit={handleSubmit}>
                     <input style={inputStyle} type="text" name="title" placeholder="Snippet Title" value={formData.title} onChange={handleChange} required />
                     
@@ -82,7 +109,9 @@ export default function SnippetModal({ isOpen, onClose, onSnippetCreated, showNo
 
                     <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
                         <button type="button" onClick={onClose} style={{ padding: '8px 16px', borderRadius: '6px', border: 'none', cursor: 'pointer' }}>Cancel</button>
-                        <button type="submit" style={{ padding: '8px 16px', borderRadius: '6px', border: 'none', backgroundColor: 'var(--primary-col)', color: 'white', cursor: 'pointer', fontWeight: 'bold' }}>Save Snippet</button>
+                        <button type="submit" style={{ padding: '8px 16px', borderRadius: '6px', border: 'none', backgroundColor: 'var(--primary-col)', color: 'white', cursor: 'pointer', fontWeight: 'bold' }}>
+                            {editData ? "Save Changes" : "Save Snippet"}
+                        </button>
                     </div>
                 </form>
             </div>

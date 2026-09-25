@@ -18,6 +18,7 @@ export default function Dashboard() {
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [snippetToDelete, setSnippetToDelete] = useState(null);
+    const [snippetToEdit, setSnippetToEdit] = useState(null);
     const [notification, setNotification] = useState({ message: '', type: '' });
 
     useEffect(() => {
@@ -45,6 +46,10 @@ export default function Dashboard() {
 
     const handleSnippetCreated = (newSnippet) => {
         setSnippets(prev => [newSnippet, ...prev]);
+    };
+
+    const handleSnippetUpdated = (updatedSnippet) => {
+        setSnippets(prev => prev.map(s => s.id === updatedSnippet.id ? updatedSnippet : s));
     };
 
     const handleToggleFavorite = async (snippetId) => {
@@ -107,6 +112,18 @@ export default function Dashboard() {
                 showNotification={showNotification}
             />
 
+            <SnippetModal 
+                isOpen={isModalOpen || !!snippetToEdit} 
+                onClose={() => {
+                    setIsModalOpen(false);
+                    setSnippetToEdit(null);
+                }} 
+                onSnippetCreated={handleSnippetCreated}
+                onSnippetUpdated={handleSnippetUpdated}
+                showNotification={showNotification}
+                editData={snippetToEdit}
+            />
+
             <ConfirmModal 
                 isOpen={!!snippetToDelete}
                 title="Delete Snippet"
@@ -163,6 +180,7 @@ export default function Dashboard() {
                 ) : (
                     <div id="results-grid">
                         {filteredSnippets.map(snippet => (
+
                             <SnippetCard 
                                 key={snippet.id} 
                                 snippet={snippet} 
@@ -170,6 +188,7 @@ export default function Dashboard() {
                                 isFavorite={favoriteIds.includes(snippet.id)}
                                 onToggleFavorite={handleToggleFavorite}
                                 onDeletePrompt={setSnippetToDelete}
+                                onEditPrompt={setSnippetToEdit}
                                 showNotification={showNotification}
                             />
                         ))}
